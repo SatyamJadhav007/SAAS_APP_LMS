@@ -1,3 +1,4 @@
+import CompanionComponent from "@/components/CompanionComponent";
 import { getCompanion } from "@/lib/actions/companion.action";
 import { getSubjectColor } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
@@ -19,6 +20,8 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
   if (!user) redirect("/sign-in");
   if (!companion) redirect("/companions");
   console.info(companion);
+  // console.info(user.imageUrl);
+  // console.info(user.firstName);
   return (
     <main>
       <article className="flex rounded-border justify-between p-6 max-md:flex-col">
@@ -50,6 +53,12 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
           {companion.duration} minutes
         </div>
       </article>
+      <CompanionComponent
+        {...companion}
+        companionId={companion.id}
+        userName={user.firstName!}
+        userImage={user.imageUrl!}
+      />
     </main>
   );
 };
