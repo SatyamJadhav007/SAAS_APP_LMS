@@ -40,7 +40,7 @@ export const configureAssistant = (voice: string, style: string) => {
       model: "gpt-4",
       messages: [
         {
-          role: "system",
+          role: "system", // Prompt for the assistant conversation
           content: `You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject.
 
                     Tutor Guidelines:
