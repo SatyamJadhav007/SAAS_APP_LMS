@@ -6,6 +6,8 @@ import {
   getRecentSessions,
 } from "@/lib/actions/companion.action";
 import { getSubjectColor } from "@/lib/utils";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 //import { Button } from "@/components/ui/button";
 import React from "react";
 
@@ -13,7 +15,8 @@ const Page = async () => {
   // Gettin the top 3 companions and the recent session ..
   const companions = await getAllCompanions({ limit: 3 });
   const recentSessionCompanions = await getRecentSessions(10);
-
+  const user = await currentUser();
+  if (!user) redirect("/sign-in");
   return (
     <main>
       <h1 className="text-2xl underline">Popular Companions</h1>
