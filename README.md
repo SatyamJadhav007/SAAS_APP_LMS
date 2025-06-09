@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 AI-Powered SaaS Web App - LMS with Next.js, Supabase & Subscription Handling via Clerk Billing
 
-## Getting Started
+An intelligent, voice-driven Learning Management System (LMS) powered by modern web technologies and AI. This app lets users learn through AI voice agents, manage their sessions, and experience smooth subscription-based access.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠 Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔐 Clerk
+A unified platform for:
+- Authentication
+- User management
+- Subscription & billing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Features:
+- Embeddable UI components
+- Flexible APIs
+- Admin dashboards
+- Role-based access & pricing pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### ⚛️ Next.js
+A full-stack React framework supporting:
+- Server-side rendering (SSR)
+- Static site generation (SSG)
+- API routes
 
-## Learn More
+### 📡 Supabase
+An open-source backend-as-a-service:
+- PostgreSQL database
+- Real-time subscriptions
+- Authentication
+- File storage
 
-To learn more about Next.js, take a look at the following resources:
+### 🎨 Tailwind CSS
+A utility-first CSS framework for:
+- Custom UI design
+- Rapid styling with utility classes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🧩 shadcn/ui
+Component library built on:
+- Radix UI
+- Tailwind CSS
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Offers:
+- Accessible, modern design system
+- Pre-built components
+- Easy theming & customization
 
-## Deploy on Vercel
+### 🐞 Sentry
+Tool for:
+- Real-time error tracking
+- Performance monitoring
+- Stack traces & alerts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🗣 Vapi
+Voice AI Platform offering:
+- Low-latency voice agents
+- Speech-to-text & text-to-speech
+- Multilingual & customizable voices
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🧾 Zod
+TypeScript-first schema validator:
+- Easy data structure validation
+- Static typing for error prevention
+
+### 🟨 TypeScript
+Superset of JavaScript enabling:
+- Static typing
+- Better tooling & error detection
+
+---
+
+## ✨ Features
+
+- 🎙 **AI Voice Agents**  
+  Converse with voice-enabled AI tutors on topics of your choice.
+
+- 🔐 **Authentication**  
+  Powered by Clerk: Email/password + social logins like Google.
+
+- 💳 **Billing & Subscriptions**  
+  Manage plans, upgrades, and payments seamlessly.
+
+- 📌 **Bookmarks & Session History**  
+  Save tutors and revisit past sessions anytime.
+
+- ♻️ **Code Reusability**  
+  Modular architecture and reusable components.
+
+- 🧑‍🏫 **Create a Tutor**  
+  Customize your own tutor: choose subject, topic, and tone.
+
+- 📱 **Cross-Device Compatibility**  
+  Responsive design for mobile, tablet, and desktop.
+
+- 🗃 **Database Integration**  
+  Real-time backend with Supabase.
+
+- 🎨 **Modern UI/UX**  
+  Built with Tailwind CSS and shadcn/ui for a polished interface.
+
+- 🔍 **Search Functionality**  
+  Find tutors efficiently with powerful filters and search bar.
+
+---
+
+
+
