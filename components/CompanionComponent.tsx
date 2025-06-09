@@ -6,7 +6,12 @@ import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import soundwaves from "@/constants/soundwaves.json";
-import { addToSessionHistory } from "@/lib/actions/companion.action";
+import {
+  addToSessionHistory,
+  newConversationPermissions,
+} from "@/lib/actions/companion.action";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 enum CallStatus {
   INACTIVE = "INACTIVE",
   CONNECTING = "CONNECTING",
@@ -42,10 +47,18 @@ const CompanionComponent = ({
     }
   }, [isSpeaking]);
   useEffect(() => {
-    const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
+    const onCallStart = async () => {
+      setCallStatus(CallStatus.ACTIVE);
+      const sessionLimit = await newConversationPermissions();
+      if (!sessionLimit) {
+        toast.error(
+          "You have reached the session limit.Please upgrade your plan."
+        );
+        redirect("/companions");
+      }
+    };
     const onCallEnd = () => {
       setCallStatus(CallStatus.FINISHED);
-      // addToSessionHistory(companionId);
       addToSessionHistory(companionId);
     };
     const onMessage = (message: Message) => {

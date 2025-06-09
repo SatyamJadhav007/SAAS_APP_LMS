@@ -1,10 +1,14 @@
 import CompanionComponent from "@/components/CompanionComponent";
-import { getCompanion } from "@/lib/actions/companion.action";
+import {
+  getCompanion,
+  newConversationPermissions,
+} from "@/lib/actions/companion.action";
 import { getSubjectColor } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
+import { toast } from "sonner";
 interface CompanionSessionPageProps {
   // here,in the interface the "id" is the dynamic param extracted from the url
   params: Promise<{ id: string }>;
@@ -13,6 +17,11 @@ interface CompanionSessionPageProps {
 // searchParams->/url?key1=value1&key2=value2...
 const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
   const { id } = await params;
+  const SessionLimitCheck = await newConversationPermissions();
+  if (SessionLimitCheck === false) {
+    toast.error("You have reached the session limit.Please upgrade your plan.");
+    redirect("/companions");
+  }
   const companion = await getCompanion(id);
   // if not logged in  then redirect to sign in page
   // also redirect if the companion is not found

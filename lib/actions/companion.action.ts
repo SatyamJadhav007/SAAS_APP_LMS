@@ -140,6 +140,24 @@ export const newCompanionPermissions = async () => {
   }
 };
 
+export const newConversationPermissions = async () => {
+  const { userId, has } = await auth();
+  if (has({ plan: "pro" }) || has({ plan: "core" })) {
+    return true;
+  }
+  const supabase = createSupabaseClient();
+  const { data, error } = await supabase
+    .from("session_history")
+    .select("id", { count: "exact" })
+    .eq("user_id", userId);
+  if (error) throw new Error(error.message);
+  const convCnt = data?.length;
+  if (convCnt >= 10) {
+    return false;
+  }
+  return true;
+};
+
 // ADD BOOKMARK
 export const addBookmark = async (companionId: string, path: string) => {
   const { userId } = await auth();
