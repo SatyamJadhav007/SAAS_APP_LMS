@@ -6,6 +6,8 @@ import { getSubjectColor } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import React from "react";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
   // all the params present in the url....
