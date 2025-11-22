@@ -1,0 +1,43 @@
+# Ignore node modules
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Ignore Next.js build output
+.next
+out
+
+# Ignore environment files
+.env
+.env.*
+!.env.example
+
+# Git + VCS
+.git
+.gitignore
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Sentry build plugin cache
+.sentryclirc
+.env.sentry-build-plugin
+
+# Ignore large folders that should not go into Docker
+voice-LMS-application-architecture.svg
+
+# Ignore IDE folders
+.vscode
+.idea
+
+# Ignore anything not needed for production
+coverage
+dist
+tmp
