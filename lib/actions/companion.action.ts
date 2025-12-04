@@ -2,6 +2,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { createSupabaseClient } from "../supabase";
 import { revalidatePath } from "next/cache";
+import { getUserXP } from "./achievement.action";
+import { checkAndAwardAchievements } from "./achievement.action";
 // SERVER ACTION FOR CREATING A COMPANION
 export const createCompanion = async (formData: CreateCompanion) => {
   // Getting the userId using the auth function of the clerk
@@ -16,6 +18,13 @@ export const createCompanion = async (formData: CreateCompanion) => {
     .select();
   if (error || !data) {
     throw new Error(error?.message || "Failed to create a companion");
+  }
+  // Check and award achievements after companion creation
+  try {
+    await checkAndAwardAchievements(author);
+    revalidatePath("/achievements");
+  } catch (error) {
+    console.error("Error checking achievements:", error);
   }
   return data[0];
 };
@@ -73,6 +82,16 @@ export const addToSessionHistory = async (companionId: string) => {
     .insert({ companion_id: companionId, user_id: userId });
 
   if (error) throw new Error(error.message);
+  
+  // Check and award achievements after session completion
+  try {
+    const { checkAndAwardAchievements } = await import("./achievement.action");
+    await checkAndAwardAchievements(userId);
+    revalidatePath("/achievements");
+  } catch (error) {
+    console.error("Error checking achievements:", error);
+  }
+  
   return data;
 };
 
@@ -120,31 +139,42 @@ export const newCompanionPermissions = async () => {
   const { userId, has } = await auth();
   const supabase = createSupabaseClient();
   let limit = 0;
-  if (has({ plan: "pro" })) {
+
+  if (!userId) return false;
+
+  // Treat users with Pro plan OR 100+ XP as Pro
+  const userXp = await getUserXP(userId);
+  const isXpPro = userXp.xp_points >= 100;
+
+  if (has({ plan: "pro" }) || isXpPro) {
     return true;
   } else if (has({ feature: "3_companion_limit" })) {
     limit = 3;
   } else if (has({ feature: "10_companion_limit" })) {
     limit = 10;
   }
+
   const { data, error } = await supabase
     .from("companions")
     .select("id", { count: "exact" })
     .eq("author", userId);
   if (error) throw new Error(error.message);
   const companionCnt = data?.length;
-  if (companionCnt >= limit) {
-    return false;
-  } else {
-    return true;
-  }
+  return companionCnt < limit;
 };
 
 export const newConversationPermissions = async () => {
   const { userId, has } = await auth();
-  if (has({ plan: "pro" }) || has({ plan: "core" })) {
+  if (!userId) return false;
+
+  // Treat users with Pro/Core plan OR 100+ XP as unlimited
+  const userXp = await getUserXP(userId);
+  const isXpPro = userXp.xp_points >= 100;
+
+  if (has({ plan: "pro" }) || has({ plan: "core" }) || isXpPro) {
     return true;
   }
+
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
     .from("session_history")
@@ -152,10 +182,7 @@ export const newConversationPermissions = async () => {
     .eq("user_id", userId);
   if (error) throw new Error(error.message);
   const convCnt = data?.length;
-  if (convCnt >= 10) {
-    return false;
-  }
-  return true;
+  return convCnt < 10;
 };
 
 // ADD BOOKMARK

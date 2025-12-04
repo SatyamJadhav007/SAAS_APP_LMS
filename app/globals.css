@@ -213,6 +213,14 @@ body {
   .transcript-fade {
     @apply pointer-events-none absolute bottom-0 left-0 right-0 h-40 max-sm:h-20 bg-gradient-to-t from-background via-background/90 to-transparent z-10;
   }
+
+  .achievement-card {
+    @apply rounded-4xl border border-black transition-all hover:shadow-lg;
+  }
+
+  .xp-progress-section {
+    @apply rounded-4xl border border-black p-6 bg-gradient-to-br from-primary/10 to-background;
+  }
 }
 
 @layer utilities {

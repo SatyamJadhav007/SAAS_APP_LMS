@@ -81,3 +81,30 @@ interface CompanionComponentProps {
   voice: string;
   style: string;
 }
+
+interface UserXP {
+  id: string;
+  user_id: string;
+  xp_points: number;
+  level: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface Achievement {
+  id: string;
+  user_id: string;
+  achievement_type: string;
+  xp_awarded: number;
+  completed_at: string;
+}
+
+interface ReferralCode {
+  id: string;
+  code: string;
+  creator_id: string;
+  used_by_id: string | null;
+  xp_awarded: boolean;
+  created_at: string;
+  used_at: string | null;
+}
